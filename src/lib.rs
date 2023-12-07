@@ -87,7 +87,7 @@ static CONTAINER: OnceCell<DashMap<TypeId, Box<dyn Any + Send + Sync>, RandomSta
     OnceCell::new();
 
 impl<T: Eq + Hash + Send + Sync + 'static + ?Sized> ArcIntern<T> {
-    fn from_arc(val: Arc<T>) -> ArcIntern<T> {
+    pub fn from_arc(val: Arc<T>) -> ArcIntern<T> {
         let type_map = CONTAINER.get_or_init(|| DashMap::with_hasher(RandomState::new()));
 
         // Prefer taking the read lock to reduce contention, only use entry api if necessary.
